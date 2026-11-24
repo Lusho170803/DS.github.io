@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portal del Estudiante</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#edf0f5;--card:#fff;--fg:#0f1b2d;--mut:#465366;--pri:#1f4e9c;--onp:#fff;--navy:#0b1730;--acc:#f2b705;--bd:#c9d1dc;--ok:#0b5cad;--okb:#dcebfa;--wa:#7a4b00;--wab:#ffefc2;--er:#8f1d1d;--erb:#fce4e4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1220;--card:#141e30;--fg:#eaf0f8;--mut:#aebbcc;--pri:#7db4f5;--onp:#08131e;--navy:#070d19;--bd:#33445c;--ok:#8cc4ff;--okb:#14304f;--wa:#ffd27a;--wab:#3a2c0c;--er:#ffb4b4;--erb:#3d1818}}
+:root[data-theme="dark"]{--bg:#0b1220;--card:#141e30;--fg:#eaf0f8;--mut:#aebbcc;--pri:#7db4f5;--onp:#08131e;--navy:#070d19;--bd:#33445c;--ok:#8cc4ff;--okb:#14304f;--wa:#ffd27a;--wab:#3a2c0c;--er:#ffb4b4;--erb:#3d1818}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 "Public Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;margin:0 0 .4em;line-height:1.2;letter-spacing:-.01em}h1{font-size:clamp(1.7rem,4vw,2.3rem)}h2{font-size:1.3rem}h3{font-size:1.05rem}p{margin:.3em 0}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;z-index:30;background:#fff;color:#000;padding:10px}
+.top{background:var(--navy);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:10px 16px;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+.av{width:40px;height:40px;border-radius:50%;background:var(--acc);color:#0b1730;font-weight:700;display:grid;place-items:center;flex:none}
+aside{background:var(--navy);color:#fff}#prof{display:none}
+nav{position:fixed;inset:auto 0 0 0;display:flex;background:var(--navy);padding-bottom:env(safe-area-inset-bottom,0px);z-index:6;border-top:1px solid #2a3a5c}
+nav a{flex:1;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#d3dbe8;text-decoration:none;font-size:.88rem;border-top:4px solid transparent}
+nav a[aria-current=page]{color:#fff;font-weight:700;border-top-color:var(--acc);background:rgba(255,255,255,.12)}nav .i{font-size:1.25rem}
+main{max-width:1040px;margin:0 auto;padding:18px 16px 100px}
+@media(min-width:900px){.shell{display:grid;grid-template-columns:272px 1fr}.top{display:none}aside{position:sticky;top:0;height:100vh;padding:28px 16px;display:flex;flex-direction:column;gap:24px}#prof{display:block}#prof .av{width:56px;height:56px;font-size:1.2rem;margin-bottom:10px}#prof p{color:#d3dbe8;font-size:.9rem}nav{position:static;flex-direction:column;border:0;background:none;padding:0;gap:4px}nav a{flex-direction:row;justify-content:flex-start;gap:12px;min-height:48px;padding:0 14px;border-top:0;border-left:4px solid transparent;border-radius:8px;font-size:1rem}nav a[aria-current=page]{border-left-color:var(--acc)}main{padding:32px 36px 48px}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #f2a900;outline-offset:2px}
+.bc{display:flex;flex-wrap:wrap;gap:6px;font-size:.92rem;color:var(--mut);margin-bottom:8px}.bc a{color:var(--pri)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin:0 0 14px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.hero{background:var(--navy);color:#fff;border-radius:18px;padding:22px;display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin-bottom:16px}.hero p{color:#d3dbe8}
+.btn{min-height:48px;min-width:48px;padding:0 18px;border-radius:10px;border:2px solid var(--pri);background:var(--card);color:var(--pri);font:inherit;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.btn.p{background:var(--pri);color:var(--onp)}.btn.a{background:var(--acc);border-color:var(--acc);color:#0b1730;margin-top:8px}.btn:disabled{opacity:.55;cursor:not-allowed;border-style:dashed}
+.badge{display:inline-flex;gap:5px;align-items:center;padding:2px 10px;border-radius:99px;font-size:.88rem;font-weight:700;border:1.5px solid currentColor;white-space:nowrap}
+.ok{color:var(--ok);background:var(--okb)}.wa{color:var(--wa);background:var(--wab)}.er{color:var(--er);background:var(--erb)}
+.msg{padding:10px 14px;border-radius:10px;border-left:6px solid currentColor;margin:10px 0}
+.tabs{display:flex;gap:8px;margin:10px 0 14px;flex-wrap:wrap}.tabs .btn[aria-selected=true]{background:var(--pri);color:var(--onp)}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+input,select,textarea{font:inherit;min-height:48px;padding:8px 12px;border:2px solid var(--bd);border-radius:10px;background:var(--card);color:var(--fg);width:100%}
+label{font-weight:700;display:block;margin:10px 0 4px}.f{display:flex;gap:12px;flex-wrap:wrap}.f>*{flex:1 1 200px}
+.err{color:var(--er);font-weight:700;min-height:1.3em}[aria-invalid=true]{border-color:var(--er)}
+.m{color:var(--mut);font-size:.95rem}
+.stp{display:flex;gap:8px;list-style:none;padding:0;margin:0 0 14px;flex-wrap:wrap}.stp li{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 6px;border:1.5px solid var(--bd);border-radius:99px;color:var(--mut);font-weight:600;background:var(--card)}
+.stp span{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--bd);color:var(--fg);font-size:.9rem}.stp .dn{color:var(--ok)}.stp .dn span{background:var(--ok);color:var(--card)}.stp .cu{border-color:var(--pri);color:var(--fg);border-width:2.5px}.stp .cu span{background:var(--pri);color:var(--onp)}
+.cr{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;border-left:6px solid transparent}.cr.on{border-color:var(--pri);border-left-color:var(--pri)}.cr .ch{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.bar{position:sticky;bottom:72px;z-index:4;background:var(--card);border:2px solid var(--pri);border-radius:14px;padding:12px 16px;margin-top:14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}.bar>div:first-child{flex:1 1 220px}
+@media(min-width:900px){.bar{bottom:14px}}
+.mt{height:12px;background:var(--bd);border-radius:6px;overflow:hidden;margin-top:6px}.mt i{display:block;height:100%;background:var(--pri)}.mt i.o{background:var(--er)}
+.sc{overflow-x:auto}.tt{display:grid;grid-template-columns:40px repeat(5,minmax(96px,1fr));min-width:560px;font-size:.82rem}.tt .dh{text-align:center;padding:4px;border-bottom:2px solid var(--bd)}
+.hl span{display:block;height:34px;color:var(--mut)}.dc{position:relative;height:306px;border-left:1px solid var(--bd);background:repeating-linear-gradient(var(--bd) 0 1px,transparent 1px 34px)}
+.bl{position:absolute;left:2px;right:2px;background:var(--okb);color:var(--ok);border:2px solid var(--ok);border-radius:6px;padding:2px 4px;overflow:hidden;line-height:1.25}
+.bl.x{color:var(--er);border:2px dashed var(--er);background:repeating-linear-gradient(45deg,var(--erb) 0 6px,var(--card) 6px 12px)}
+.bars{display:flex;gap:6px;align-items:flex-end;margin-top:8px}.bars div{flex:1;text-align:center;font-size:.85rem}.bars i{display:block;border-radius:4px 4px 0 0;background:var(--pri);margin-bottom:2px}.bars i.f{background:repeating-linear-gradient(45deg,var(--er) 0 4px,var(--card) 4px 8px);border:2px solid var(--er)}
+.big{font-family:"Source Serif 4",Georgia,serif;font-size:2.4rem;font-weight:700;line-height:1}
+.lk{display:flex;gap:12px;align-items:center;text-decoration:none;color:var(--fg);min-height:72px}.lk:hover{border-color:var(--pri)}.lk .i{font-size:1.6rem}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}.chips .btn[aria-pressed=true]{background:var(--pri);color:var(--onp)}
+.tl{list-style:none;padding:0;margin:8px 0}.tl li{padding:0 0 14px 34px;position:relative;border-left:2px solid var(--bd);margin-left:12px}.tl li b{position:absolute;left:-14px;top:0;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:2px solid var(--bd)}.tl .d b{background:var(--ok);border-color:var(--ok);color:var(--card)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--bd)}td.r,th.r{text-align:right}
+dialog{border:2px solid var(--pri);border-radius:16px;max-width:580px;width:calc(100% - 24px);background:var(--card);color:var(--fg);padding:20px}dialog::backdrop{background:rgba(5,10,20,.65)}
+.live{position:fixed;top:72px;left:50%;transform:translateX(-50%);z-index:20;width:min(92%,460px)}
+.sp{width:16px;height:16px;border:3px solid currentColor;border-right-color:transparent;border-radius:50%;animation:s .8s linear infinite}@keyframes s{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.lg aside,.lg .top{display:none}.lg main{max-width:none;padding:0}.lg.shell{display:block}
+.lgw{min-height:100vh;background:var(--navy);display:grid;place-items:center;padding:24px 16px}.lgc{background:var(--card);border:1px solid var(--bd);border-radius:18px;width:min(100%,440px);padding:28px 24px}.lgc .brand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.pw{display:flex;gap:8px}.pw input{flex:1}.lnk{background:none;border:0;color:var(--pri);font:inherit;font-weight:700;text-decoration:underline;min-height:48px;cursor:pointer;padding:0 4px}
+</style></head><body>
+<a class="skip" href="#app">Saltar al contenido</a>
+<div class="shell"><div class="top"><b>🎓 Portal del Estudiante</b><span style="display:flex;gap:10px;align-items:center"><span class="av" aria-hidden="true">LV</span><button class="btn" data-a="out" style="min-height:44px;background:transparent;color:#fff;border-color:#fff">Salir</button></span></div>
+<aside><div id="prof"></div><nav aria-label="Navegación principal" id="nav"></nav></aside>
+<main id="app" tabindex="-1"></main></div>
+<div class="live" role="status" aria-live="polite" id="live"></div><dialog id="dm" aria-labelledby="dt"></dialog>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])),MAX=22,DY=['Lun','Mar','Mié','Jue','Vie'];
+const C=[
+{id:1,c:'332173',n:'Diseño de Software',cr:2,k:8,s:'T1',v:'07',h:[['Lun',8,10]]},
+{id:2,c:'332187',n:'Legislación Informático',cr:2,k:3,s:'B1',v:'08',h:[['Lun',9,11]]},
+{id:3,c:'33218A',n:'Inglés IV',cr:2,k:0,s:'B1',v:'08',h:[['Mar',8,10]]},
+{id:4,c:'33228B',n:'Taller de Investigación I',cr:2,k:15,s:'B1',v:'08',h:[['Mar',10,12]]},
+{id:5,c:'333185',n:'Comercio Electrónico',cr:3,k:10,s:'B2',v:'08',h:[['Mié',8,11]]},
+{id:6,c:'333186',n:'Gobierno de TI',cr:3,k:6,s:'B2',v:'08',h:[['Jue',8,11]]},
+{id:7,c:'333188',n:'Machine Learning (Electivo)',cr:3,k:4,s:'B2',v:'08',h:[['Vie',8,11]]},
+{id:8,c:'333189',n:'Seguridad de la Infraestructura de TI I',cr:3,k:9,s:'B2',v:'08',h:[['Mié',14,17]]}];
+const H=[['Programación II',3,16],['Base de Datos I',3,15],['Sistemas Operativos',3,13],['Matemática Discreta',3,12],['Física General',3,9],['Ingeniería de Software I',3,17]];
+const D=[{id:'cert',n:'Certificado de estudios',p:25,i:'📜',d:'Notas de todos los ciclos cursados.'},{id:'mat',n:'Constancia de matrícula',p:10,i:'🧾',d:'Acredita tu matrícula vigente.'},{id:'ter',n:'Constancia de tercio superior',p:18,i:'🏅',d:'Para becas y convenios.'},{id:'ing',n:'Constancia de ingreso',p:12,i:'🎫',d:'Fecha y modalidad de ingreso.'}];
+const ST=['Pendiente','En revisión','Resuelto'],IC=['⏳','🔍','✔'],CL=['wa','ok','ok'];
+const S={in:false,fails:0,lock:0,un:'',sel:[],done:false,tab:'insc',q:'',cupo:false,sol:[],fl:-1,t:{doc:'cert',qty:1,fmt:'dig',urg:false},open:null,
+tk:[{id:'REQ-1042',a:'Corrección de nota en Física General',cat:'Académico',d:'La nota publicada no coincide con el acta.',s:0,f:'18/11/2026'},{id:'REQ-1038',a:'Error en mi apellido en constancia',cat:'Datos personales',d:'Falta una letra en mi segundo apellido.',s:1,f:'10/11/2026'},{id:'REQ-1025',a:'Cambio de sección en Inglés IV',cat:'Matrícula',d:'Cruce con mi horario de trabajo.',s:2,f:'02/11/2026'}]};
+const sel=()=>C.filter(c=>S.sel.includes(c.id)),hs=c=>c.h.map(x=>`${x[0]} ${x[1]}:00–${x[2]}:00`).join(' · ');
+const clash=(a,b)=>a.h.some(x=>b.h.some(y=>x[0]===y[0]&&x[1]<y[2]&&y[1]<x[2]));
+const ovl=(a,b)=>{for(const x of a.h)for(const y of b.h)if(x[0]===y[0]&&x[1]<y[2]&&y[1]<x[2])return[x[0],Math.max(x[1],y[1]),Math.min(x[2],y[2])]};
+const conf=()=>{const s=sel(),r=[];s.forEach((a,i)=>s.slice(i+1).forEach(b=>clash(a,b)&&r.push([a,b])));return r};
+const cred=()=>sel().reduce((a,c)=>a+c.cr,0),money=n=>'S/ '+n.toFixed(2);
+const avg=()=>H.reduce((a,x)=>a+x[1]*x[2],0)/H.reduce((a,x)=>a+x[1],0);
+const bd=(c,t,i)=>`<span class="badge ${c}"><span aria-hidden="true">${i}</span>${t}</span>`;
+const say=m=>{$('#live').innerHTML=`<div class="msg ok card" style="margin:0">✔ ${esc(m)}</div>`;setTimeout(()=>$('#live').innerHTML='',3800)};
+const V=[['inicio','Inicio','🏠'],['academico','Académico','📚'],['tramites','Trámites','📄'],['atencion','Atención','💬']];
+const bc=a=>`<div class="bc">${a.map((x,i)=>i<a.length-1?`<a href="${x[1]}">${x[0]}</a><span aria-hidden="true">›</span>`:`<span aria-current="page">${x[0]}</span>`).join('')}</div><button class="btn" data-a="back" style="margin-bottom:12px">← Volver</button>`;
+const stp=(a,n)=>`<ol class="stp" aria-label="Pasos del proceso">${a.map((x,i)=>`<li ${i===n?'aria-current="step"':''} class="${i<n?'dn':i===n?'cu':''}"><span aria-hidden="true">${i<n?'✔':i+1}</span>${x}${i<n?'<span class="m" style="all:unset;font-size:.85rem"> (listo)</span>':''}</li>`).join('')}</ol>`;
+const bars=()=>`<div class="bars" aria-label="Notas por curso">${H.map(x=>`<div><i class="${x[2]<11?'f':''}" style="height:${x[2]*3}px"></i>${x[2]<11?'✖':'✔'}${x[2]}</div>`).join('')}</div>`;
+function render(){
+ const r=(location.hash||'#inicio').slice(1),k=V.find(x=>x[0]===r)?r:'inicio';
+ document.querySelector('.shell').classList.toggle('lg',!S.in);
+ if(!S.in){$('#app').innerHTML=login();document.title='Iniciar sesión · Portal del Estudiante';setTimeout(()=>{const u=$('#lu');if(u)u.focus({preventScroll:true})},0);return}
+ $('#nav').innerHTML=V.map(x=>`<a href="#${x[0]}" ${x[0]===k?'aria-current="page"':''}><span class="i" aria-hidden="true">${x[2]}</span>${x[1]}</a>`).join('');
+ $('#prof').innerHTML=`<div class="av" aria-hidden="true">LV</div><h3 style="color:#fff;margin:0">Luis Veliz Miranda</h3><p>Código R03419F<br>Ing. de Sistemas y Computación<br>Ciclo 2026-II</p>${S.done?bd('ok','Matrícula registrada','✔'):bd('wa','Matrícula pendiente','⚠')}<div style="margin-top:14px"><button class="btn" data-a="out" style="width:100%;background:transparent;color:#fff;border-color:#fff">⎋ Cerrar sesión</button></div>`;
+ $('#app').innerHTML=({inicio:dash,academico:acad,tramites:tram,atencion:aten})[k]();
+ if(k==='academico'&&S.tab==='insc')list();if(k==='tramites')fee();
+ document.title=V.find(x=>x[0]===k)[1]+' · Portal del Estudiante'}
+function dash(){const c=cred(),p=Math.min(100,c/MAX*100),a=S.tk.filter(x=>x.s<2).length,ap=H.filter(x=>x[2]>=11);
+return `<section class="hero"><svg width="116" height="116" viewBox="0 0 116 116" role="img" aria-label="${c} de ${MAX} créditos elegidos para la matrícula"><circle cx="58" cy="58" r="46" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="10"/><circle cx="58" cy="58" r="46" fill="none" stroke="${c>MAX?'#ffb4b4':'#f2b705'}" stroke-width="10" stroke-linecap="round" stroke-dasharray="${p*2.89} 289" transform="rotate(-90 58 58)"/><text x="58" y="56" text-anchor="middle" fill="#fff" font-size="28" font-weight="700">${c}</text><text x="58" y="76" text-anchor="middle" fill="#d3dbe8" font-size="13">de ${MAX} cr.</text></svg>
+<div style="flex:1;min-width:230px"><h1>Hola, Luis</h1><p>Ingeniería de Sistemas y Computación · Plan 2022 · Nivel 08 · Ciclo activo 2026-II</p><p>${S.done?bd('ok','Matrícula registrada','✔'):bd('wa','Matrícula pendiente de confirmar','⚠')}</p>
+<a class="btn a" href="#academico" data-a="tab" data-t="insc">${S.done?'Ver mi matrícula':S.sel.length?'Continuar mi matrícula':'Inscribirme en cursos'}</a></div></section>
+<div class="grid"><div class="card"><h3>Promedio ponderado</h3><div class="big">${avg().toFixed(2)}</div>${bars()}</div>
+<div class="card"><h3>Créditos aprobados</h3><div class="big">${ap.reduce((a,x)=>a+x[1],0)}</div><p class="m">${ap.length} cursos aprobados · ${H.length-ap.length} desaprobado. Aprobado desde la nota 11.</p></div>
+<div class="card"><h3>Requerimientos activos</h3><div class="big">${a}</div><p class="m">${a?'Tienes trámites en proceso.':'No tienes trámites pendientes.'}</p></div></div>
+<h2>Accesos directos para ti</h2><div class="grid"><a class="card lk" href="#academico" data-a="tab" data-t="insc"><span class="i" aria-hidden="true">📚</span><span><b>Matrícula 2026-II</b><br><span class="m">${S.sel.length} cursos · ${c} créditos</span></span></a>
+<a class="card lk" href="#tramites"><span class="i" aria-hidden="true">📄</span><span><b>Solicitar un certificado</b><br><span class="m">Desde S/ 10.00</span></span></a>
+<a class="card lk" href="#atencion"><span class="i" aria-hidden="true">💬</span><span><b>Mis requerimientos</b><br><span class="m">${a} activos</span></span></a></div>
+<div class="msg wa">⚠ La matrícula cierra el 30/11. Puedes elegir cursos ahora y confirmar después.</div>`}
+function acad(){return bc([['Inicio','#inicio'],['Académico','#academico'],[S.tab==='insc'?'Inscripción de cursos':'Historial académico','#academico']])+`<h1>Académico</h1>
+<div class="tabs" role="tablist">${[['insc','Inscripción de cursos'],['his','Historial académico']].map(x=>`<button class="btn" role="tab" aria-selected="${S.tab===x[0]}" data-a="tab" data-t="${x[0]}">${x[1]}</button>`).join('')}</div>`+(S.tab==='insc'?
+stp(['Elegir cursos','Revisar','Confirmar'],S.done?3:S.sel.length?1:0)+`<div class="card"><div class="f"><div><label for="q">Buscar curso o código</label><input id="q" type="search" value="${esc(S.q)}" placeholder="Ej. Gobierno o 333186"></div>
+<div><label for="cp">Mostrar</label><select id="cp"><option value="0">Todos los cursos</option><option value="1" ${S.cupo?'selected':''}>Solo con cupos</option></select></div></div></div><div id="cf"></div>
+<div class="two"><div id="lst"></div><div class="card" style="align-self:start"><h2>Horario semanal</h2><div id="ttw"></div></div></div><div class="bar" id="bar"></div>`:
+`<div class="two"><div class="card"><h2>Promedio ponderado</h2><div class="big">${avg().toFixed(2)}</div><p class="m">Nota × créditos de cada curso. Aprobado desde 11.</p></div><div class="card"><h2>Notas por curso</h2>${bars()}</div></div>
+<div class="card sc"><table><thead><tr><th>Curso</th><th class="r">Créd.</th><th class="r">Nota</th><th>Estado</th></tr></thead><tbody>${H.map(x=>`<tr><td>${x[0]}</td><td class="r">${x[1]}</td><td class="r">${x[2]}</td><td>${x[2]>=11?bd('ok','Aprobado','✔'):bd('er','Desaprobado','✖')}</td></tr>`).join('')}</tbody></table></div>`)}
+function tt(){const s=sel(),cf=new Set(conf().flat().map(c=>c.id));
+ return `<div class="sc"><div class="tt" role="img" aria-label="Horario semanal con ${s.length} cursos elegidos"><div></div>${DY.map(d=>`<b class="dh">${d}</b>`).join('')}<div class="hl">${Array.from({length:9},(_,i)=>`<span>${8+i}h</span>`).join('')}</div>
+ ${DY.map(d=>{let n=0;return `<div class="dc">${s.flatMap(c=>c.h.filter(x=>x[0]===d).map(x=>{const X=cf.has(c.id),l=X?(n++%2)*50:0;return `<div class="bl ${X?'x':''}" style="top:${(x[1]-8)*34}px;height:${(x[2]-x[1])*34-2}px;left:calc(${l}% + 2px);right:${X?(l?2:'50%'):2}${X&&!l?'':''}${X&&!l?'':'px'}"><b>${X?'✖ ':''}${c.n}</b><br>${x[1]}–${x[2]}h</div>`})).join('')}</div>`}).join('')}</div></div>${s.length?'':'<p class="m">Elige cursos para verlos aquí.</p>'}`}
+function list(){const q=S.q.toLowerCase(),cs=conf(),c=cred();
+ $('#cf').innerHTML=cs.map(([a,b])=>{const o=ovl(a,b);return `<div class="msg er" role="alert">✖ <b>Cruce de horario:</b> ${a.n} y ${b.n} coinciden el ${o[0]} de ${o[1]}:00 a ${o[2]}:00. <b>Cómo resolverlo:</b> quita uno de los dos con el botón “Quitar”. Tu selección se mantiene.</div>`}).join('')+(c>MAX?`<div class="msg er" role="alert">✖ Superas el máximo de ${MAX} créditos. Quita un curso.</div>`:'');
+ const r=C.filter(x=>(x.n+x.c).toLowerCase().includes(q)&&(!S.cupo||x.k>0));
+ $('#lst').innerHTML=r.length?r.map(x=>{const on=S.sel.includes(x.id),o=sel().filter(y=>y.id!==x.id&&clash(y,x)),st=x.k===0?bd('er','Sin cupos','✖'):x.k<=5?bd('wa','Quedan '+x.k+' cupos','⚠'):bd('ok',x.k+' cupos','✔');
+ return `<article class="card cr ${on?'on':''}"><div><div class="ch"><h3 style="margin:0">${x.n}</h3></div><p class="m">${x.c} · ${x.cr} créditos · Sección ${x.s} · Nivel ${x.v}</p><p class="m">🕘 ${hs(x)}</p><p>${st} ${on&&o.length?bd('er','Cruce con '+o[0].n,'✖'):''}</p></div>
+ <button class="btn ${on?'':'p'}" aria-pressed="${on}" data-a="tg" data-id="${x.id}" ${x.k===0&&!on?'disabled':''}>${on?'✔ Quitar':'+ Elegir'}</button></article>`}).join(''):'<div class="msg wa">⚠ No hay cursos con ese filtro. Prueba con otro nombre o muestra todos los cursos.</div>';
+ $('#ttw').innerHTML=tt();
+ $('#bar').innerHTML=`<div><b>${S.sel.length} cursos · ${c} / ${MAX} créditos</b> ${cs.length?bd('er',cs.length+' cruce','✖'):S.sel.length?bd('ok','Sin cruces','✔'):''}<div class="mt" role="progressbar" aria-valuenow="${c}" aria-valuemin="0" aria-valuemax="${MAX}" aria-label="Créditos elegidos"><i class="${c>MAX?'o':''}" style="width:${Math.min(100,c/MAX*100)}%"></i></div></div><button class="btn p" data-a="mat" ${S.sel.length?'':'disabled'}>${S.done?'Ver matrícula':'Revisar matrícula'}</button>`}
+function mat(){const s=sel(),cs=conf(),c=cred(),is=[];
+ if(!s.length)is.push('Elige al menos un curso.');if(c>MAX)is.push(`Superas el máximo de ${MAX} créditos (llevas ${c}). Quita un curso.`);cs.forEach(([a,b])=>is.push(`Cruce entre ${a.n} y ${b.n}. Quita uno para continuar.`));
+ dlg(S.done?`<h2 id="dt">✔ Matrícula registrada</h2><p>Tu matrícula 2026-II con ${c} créditos quedó confirmada.</p><button class="btn p" data-a="x">Cerrar</button>`:
+ `<h2 id="dt">Confirmar matrícula 2026-II</h2>${stp(['Elegir','Revisar','Confirmar'],1)}<table><tbody>${s.map(x=>`<tr><td>${x.n}<br><span class="m">${x.c} · ${hs(x)}</span></td><td class="r">${x.cr} cr</td></tr>`).join('')}<tr><th>Total</th><th class="r">${c} / ${MAX} cr</th></tr></tbody></table>
+ ${is.length?is.map(i=>`<div class="msg er" role="alert">✖ ${i}</div>`).join(''):'<div class="msg ok">✔ Sin cruces ni excesos de créditos. Puedes confirmar.</div>'}
+ <div class="row" style="margin-top:12px"><button class="btn" data-a="x">← Volver a editar</button><button class="btn p" data-a="cm" ${is.length?'disabled':''}>Confirmar matrícula</button></div>`)}
+function dlg(h){const d=$('#dm');d.innerHTML=h;if(!d.open)d.showModal()}
+function tram(){const t=S.t;return bc([['Inicio','#inicio'],['Trámites','#tramites'],['Certificados y constancias','#tramites']])+`<h1>Trámites y certificados</h1>${stp(['Documento','Opciones','Confirmar'],S.t.doc?1:0)}
+<div class="two"><div><h2>1. Elige el documento</h2><div class="grid" style="grid-template-columns:1fr">${D.map(d=>`<button class="card lk btn" style="text-align:left;justify-content:flex-start;margin:0;color:var(--fg);border-color:${t.doc===d.id?'var(--pri)':'var(--bd)'};border-width:${t.doc===d.id?3:2}px" aria-pressed="${t.doc===d.id}" data-a="dc" data-id="${d.id}"><span class="i" aria-hidden="true">${d.i}</span><span><b>${d.n}</b> — ${money(d.p)}<br><span class="m" style="font-weight:400">${d.d}</span> ${t.doc===d.id?bd('ok','Seleccionado','✔'):''}</span></button>`).join('')}</div></div>
+<div class="card" style="align-self:start"><h2>2. Opciones</h2><div class="f"><div><label for="qt">Cantidad (1 a 5)</label><input id="qt" type="number" min="1" max="5" value="${t.qty}"></div><div><label for="fm">Formato</label><select id="fm"><option value="dig">Digital (sin costo extra)</option><option value="imp" ${t.fmt==='imp'?'selected':''}>Impreso (+ S/ 5.00 c/u)</option></select></div></div>
+<label style="display:flex;gap:10px;align-items:center;min-height:48px"><input type="checkbox" id="ur" style="width:24px;min-height:24px" ${t.urg?'checked':''}> Entrega urgente en 24 h (+ S/ 10.00)</label>
+<div id="fee" aria-live="polite"></div><button class="btn p" data-a="rq" style="width:100%">3. Solicitar documento</button></div></div>
+${S.sol.length?`<div class="card"><h2>Mis solicitudes</h2>${S.sol.map(x=>`<p>${bd('wa','Pendiente de pago','⏳')} <b>${x.id}</b> · ${x.n} × ${x.q} · ${money(x.m)}</p>`).join('')}</div>`:''}`}
+function fee(){const t=S.t,d=D.find(x=>x.id===t.doc);t.qty=Math.min(5,Math.max(1,+t.qty||1));const u=d.p+(t.fmt==='imp'?5:0),m=u*t.qty+(t.urg?10:0);
+ $('#fee').innerHTML=`<table style="margin:10px 0"><tbody><tr><td>${d.n}</td><td class="r">${money(d.p)}</td></tr>${t.fmt==='imp'?'<tr><td>Formato impreso</td><td class="r">+ S/ 5.00</td></tr>':''}<tr><td>Cantidad</td><td class="r">× ${t.qty}</td></tr>${t.urg?'<tr><td>Entrega urgente</td><td class="r">+ S/ 10.00</td></tr>':''}<tr><th>Tasa a pagar</th><th class="r">${money(m)}</th></tr></tbody></table>`;return m}
+function aten(){const o=S.tk.find(x=>x.id===S.open);
+ if(o)return bc([['Inicio','#inicio'],['Atención','#atencion'],['Requerimientos','#atencion'],[o.id,'#atencion']])+`<div class="card"><h1 style="font-size:1.5rem">${o.id}: ${esc(o.a)}</h1><p>${bd(CL[o.s],ST[o.s],IC[o.s])} · ${o.cat} · Registrado el ${o.f}</p><p>${esc(o.d)}</p>
+ <h3 style="margin-top:14px">Seguimiento</h3><ol class="tl">${ST.map((x,i)=>`<li class="${i<=o.s?'d':''}"><b aria-hidden="true">${i<=o.s?'✔':''}</b>${x}${i===o.s?' <b style="all:unset;font-weight:700">(estado actual)</b>':i>o.s?' <span class="m">(pendiente)</span>':''}</li>`).join('')}</ol>
+ <div class="row"><button class="btn" data-a="cl">← Volver a la lista</button>${o.s<2?'<button class="btn p" data-a="adv">Simular avance de estado (demo)</button>':''}</div></div>`;
+ const L=S.tk.filter(x=>S.fl<0||x.s===S.fl);
+ return bc([['Inicio','#inicio'],['Atención','#atencion'],['Requerimientos','#atencion']])+`<h1>Atención de requerimientos</h1><div class="two"><div><div class="chips" role="group" aria-label="Filtrar por estado">${[-1,0,1,2].map(i=>`<button class="btn" aria-pressed="${S.fl===i}" data-a="fl" data-i="${i}">${i<0?'Todos ('+S.tk.length+')':IC[i]+' '+ST[i]+' ('+S.tk.filter(x=>x.s===i).length+')'}</button>`).join('')}</div>
+ ${L.length?L.map(x=>`<div class="card row"><div><b>${x.id}</b> · ${esc(x.a)}<br>${bd(CL[x.s],ST[x.s],IC[x.s])} <span class="m">${x.f}</span></div><button class="btn" data-a="op" data-id="${x.id}">Ver detalle</button></div>`).join(''):'<div class="msg wa">⚠ No hay requerimientos en este estado.</div>'}</div>
+ <div class="card" style="align-self:start"><h2>Nuevo requerimiento</h2><label for="as">Asunto</label><input id="as"><div class="err" id="e1"></div><label for="ct">Categoría</label><select id="ct"><option>Académico</option><option>Matrícula</option><option>Datos personales</option><option>Pagos</option></select>
+ <label for="ds">Descripción</label><textarea id="ds" rows="3"></textarea><div class="err" id="e2"></div><button class="btn p" data-a="nt" style="width:100%">Enviar requerimiento</button></div></div>`}
+function login(){return `<div class="lgw"><form class="lgc" id="lf" novalidate aria-labelledby="lt"><div class="brand"><span class="av" aria-hidden="true">🎓</span><b>Portal del Estudiante</b></div><h1 id="lt" style="font-size:1.6rem">Iniciar sesión</h1><p class="m">Un solo acceso para matrícula, historial, trámites y atención.</p>
+<label for="lu">Código de estudiante</label><input id="lu" name="u" autocomplete="username" value="${esc(S.un)}" placeholder="Ej. R03419F"><div class="err" id="e1"></div>
+<label for="lp">Contraseña</label><div class="pw"><input id="lp" name="p" type="password" autocomplete="current-password"><button type="button" class="btn" data-a="sh" aria-pressed="false">Mostrar</button></div><div class="err" id="e2"></div><div id="le"></div>
+<button class="btn p" id="lb" type="submit" style="width:100%;margin-top:6px">Ingresar</button>
+<div class="row" style="margin-top:8px"><button type="button" class="lnk" data-a="fg">¿Olvidaste tu contraseña?</button></div>
+<div class="msg ok"><b>Datos de demostración</b><br>Código <b>R03419F</b> · contraseña <b>portal2026</b><br><button type="button" class="btn" data-a="demo" style="margin-top:8px">Usar datos de demostración</button></div></form></div>`}
+function doLogin(){const u=$('#lu'),p=$('#lp');S.un=u.value.trim();u.ariaInvalid=p.ariaInvalid=false;$('#e1').textContent=$('#e2').textContent='';$('#le').innerHTML='';let ok=true;
+ if(!S.un){ok=false;u.ariaInvalid=true;$('#e1').textContent='✖ Escribe tu código de estudiante.'}
+ if(!p.value){ok=false;p.ariaInvalid=true;$('#e2').textContent='✖ Escribe tu contraseña.'}
+ if(!ok)return;const b=$('#lb');b.disabled=true;b.innerHTML='<span class="sp"></span> Verificando…';
+ setTimeout(()=>{if(S.un.toUpperCase()==='R03419F'&&p.value==='portal2026'){S.in=true;S.fails=0;if(!location.hash)location.hash='#inicio';render();scrollTo(0,0);say('Bienvenido, Luis. Tu sesión está iniciada.');$('#app').focus({preventScroll:true})}
+ else{S.fails++;p.ariaInvalid=true;p.value='';if(S.fails>=3){S.fails=0;lockIt()}else{b.disabled=false;b.textContent='Ingresar';$('#le').innerHTML=`<div class="msg er" role="alert">✖ Código o contraseña incorrectos. Te quedan ${3-S.fails} intento(s). Revisa tus datos e inténtalo de nuevo.</div>`}}},700)}
+function lockIt(){let n=15;const b=$('#lb');$('#le').innerHTML='<div class="msg wa" role="alert">⚠ Demasiados intentos. Por seguridad, espera 15 segundos para volver a intentarlo.</div>';b.disabled=true;b.textContent='Espera '+n+' s';
+ const t=setInterval(()=>{n--;const x=$('#lb');if(!x){clearInterval(t);return}if(n<=0){clearInterval(t);x.disabled=false;x.textContent='Ingresar';$('#le').innerHTML=''}else x.textContent='Espera '+n+' s'},1000)}
+const A={out(){dlg(`<h2 id="dt">¿Cerrar sesión?</h2><p>${S.sel.length&&!S.done?'⚠ Tienes una selección de matrícula sin confirmar. Se perderá al salir.':'Tendrás que volver a ingresar para usar el portal.'}</p><div class="row"><button class="btn" data-a="x">Cancelar</button><button class="btn p" data-a="out2">Sí, cerrar sesión</button></div>`)},
+out2(){$('#dm').close();if(!S.done)S.sel=[];S.in=false;S.open=null;S.un='';location.hash='';render();scrollTo(0,0);say('Sesión cerrada correctamente.')},
+sh(){const p=$('#lp'),b=$('[data-a=sh]'),s=p.type==='password';p.type=s?'text':'password';b.textContent=s?'Ocultar':'Mostrar';b.setAttribute('aria-pressed',String(s))},
+demo(){$('#lu').value='R03419F';$('#lp').value='portal2026';$('#lp').type='password'},
+fg(){dlg(`<h2 id="dt">Recuperar acceso</h2><p class="m">Escribe tu código de estudiante y te enviaremos las instrucciones a tu correo institucional.</p><label for="rc">Código de estudiante</label><input id="rc" value="${esc(S.un)}"><div class="err" id="e3"></div><div class="row" style="margin-top:10px"><button class="btn" data-a="x">Cancelar</button><button class="btn p" data-a="fg2">Enviar instrucciones</button></div>`)},
+fg2(){const v=$('#rc').value.trim();if(!v){$('#e3').textContent='✖ Escribe tu código de estudiante.';return}$('#dm').innerHTML=`<h2 id="dt">✔ Revisa tu correo</h2><p>Si el código <b>${esc(v)}</b> existe, enviamos las instrucciones a tu correo institucional.</p><button class="btn p" data-a="x">Entendido</button>`},
+back(){location.hash='#inicio'},tab(d){S.tab=d.t;if(location.hash==='#academico')render()},
+tg(d){const i=+d.id;S.sel=S.sel.includes(i)?S.sel.filter(x=>x!==i):[...S.sel,i];list()},mat,x(){$('#dm').close()},
+cm(){const b=$('#dm button[data-a=cm]');b.disabled=true;b.innerHTML='<span class="sp"></span> Confirmando…';setTimeout(()=>{S.done=true;mat();render()},900)},
+dc(d){S.t.doc=d.id;render()},
+rq(){const m=fee(),d=D.find(x=>x.id===S.t.doc);dlg(`<h2 id="dt">Confirmar solicitud</h2>${stp(['Documento','Opciones','Confirmar'],2)}<p>${d.n} × ${S.t.qty} (${S.t.fmt==='imp'?'impreso':'digital'}${S.t.urg?', urgente':''})</p><p><b>Tasa: ${money(m)}</b></p><div class="row"><button class="btn" data-a="x">Cancelar</button><button class="btn p" data-a="cr">Confirmar y generar orden</button></div>`)},
+cr(){const m=fee(),d=D.find(x=>x.id===S.t.doc);S.sol.push({id:'SOL-'+(2100+S.sol.length),n:d.n,q:S.t.qty,m});$('#dm').close();render();say('Orden generada. Paga la tasa en caja o en línea.')},
+fl(d){S.fl=+d.i;render()},op(d){S.open=d.id;render();scrollTo(0,0)},cl(){S.open=null;render()},adv(){const o=S.tk.find(x=>x.id===S.open);o.s++;render();say('Estado actualizado a '+ST[o.s])},
+nt(){const a=$('#as'),d=$('#ds');a.ariaInvalid=d.ariaInvalid=false;$('#e1').textContent=$('#e2').textContent='';let ok=true;
+ if(a.value.trim().length<5){ok=false;a.ariaInvalid=true;$('#e1').textContent='✖ Escribe un asunto de al menos 5 caracteres.'}
+ if(d.value.trim().length<10){ok=false;d.ariaInvalid=true;$('#e2').textContent='✖ Describe tu caso en al menos 10 caracteres. Tus datos se conservan.'}
+ if(!ok)return;S.tk.unshift({id:'REQ-'+(1043+S.tk.length),a:a.value.trim(),cat:$('#ct').value,d:d.value.trim(),s:0,f:'22/11/2026'});S.fl=-1;render();say('Requerimiento registrado como Pendiente.')}};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b&&A[b.dataset.a])A[b.dataset.a](b.dataset)});
+document.addEventListener('input',e=>{const i=e.target.id;if(i==='q'){S.q=e.target.value;list()}else if(i==='qt'){S.t.qty=e.target.value;fee()}});
+document.addEventListener('change',e=>{const i=e.target.id;if(i==='cp'){S.cupo=e.target.value==='1';list()}else if(i==='fm'){S.t.fmt=e.target.value;fee()}else if(i==='ur'){S.t.urg=e.target.checked;fee()}});
+document.addEventListener('submit',e=>{if(e.target.id==='lf'){e.preventDefault();doLogin()}});
+addEventListener('hashchange',()=>{S.open=null;render();scrollTo(0,0);$('#app').focus({preventScroll:true})});render();
+</script></body></html>
